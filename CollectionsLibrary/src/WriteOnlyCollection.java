@@ -1,11 +1,11 @@
 import java.util.Collection;
 import java.util.Iterator;
 
-final class WriteOnlyCollection<E> extends DelegateCollection<E> {
+abstract class WriteOnlyCollection<E> extends DelegateCollection<E> {
     public WriteOnlyCollection(Collection<E> delegate){
         super(delegate);
     }
-    private UnsupportedOperationException unsupported(){
+    protected UnsupportedOperationException unsupported(){
         return new UnsupportedOperationException("This collection is write-only");
     }
     @Override
@@ -35,7 +35,6 @@ final class WriteOnlyCollection<E> extends DelegateCollection<E> {
     @Override
     public boolean removeAll(Collection<?> c){
         return delegate.removeAll(c);
-
     }
     @Override
     public boolean retainAll(Collection<?> c){
@@ -44,5 +43,24 @@ final class WriteOnlyCollection<E> extends DelegateCollection<E> {
     @Override
     public void clear(){
         delegate.clear();
+    }
+    @Override
+    public Object[] toArray() {
+        throw unsupported();
+    }
+
+    @Override
+    public <T> T[] toArray(T[] a) {
+        throw unsupported();
+    }
+
+    @Override
+    public boolean containsAll(Collection<?> c) {
+        throw unsupported();
+    }
+
+    @Override
+    public int size() {
+        throw unsupported();
     }
 }

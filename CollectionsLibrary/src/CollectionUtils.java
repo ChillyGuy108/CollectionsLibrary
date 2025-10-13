@@ -55,12 +55,6 @@ public final class CollectionUtils {
     public static<T> Queue<T> singletonQueue(T element) {
         return singletonQueue(element);
     }
-    public static<E> Collection<E> readOnly(Collection<E> c){
-        return new ReadOnlyCollection<>(c);
-    }
-    public static<E> Collection<E> writeOnly(Collection<E> c){
-        return new WriteOnlyCollection<>(c);
-    }
     public static<T> Set<T> readOnlySet(T... elements){
         return Set.of(elements);
     }
@@ -78,6 +72,19 @@ public final class CollectionUtils {
         }
         return Map.copyOf(map);
     }
+    public static <E> ReadOnlyList<E> readOnlyList2(List<E> list) {
+        return new ReadOnlyList<>(new ArrayList<>(list));
+    }
+    public static <E> WriteOnlyList<E> writeOnlyArrayList(List<E> list) {
+        return new WriteOnlyList<>(new ArrayList<>());
+    }
+    public static <E> WriteOnlyList<E> writeOnlyLinkedList(List<E> list) {
+        return new WriteOnlyList<>(new LinkedList<>());
+    }
+    public static <E> ReadOnlySet<E> raedOnlySet2(Set<E> set) {
+        return new ReadOnlySet<>(new HashSet<>());
+    }
+
 
 }
 

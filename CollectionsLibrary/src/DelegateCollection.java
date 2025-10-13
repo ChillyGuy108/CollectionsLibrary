@@ -1,5 +1,6 @@
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.Spliterator;
 
 abstract class DelegateCollection<E> implements Collection<E> {
     protected final Collection<E> delegate;
@@ -35,6 +36,20 @@ abstract class DelegateCollection<E> implements Collection<E> {
     public boolean containsAll(Collection<?> c){
         return delegate.containsAll(c);
     }
+    @Override
+    public boolean equals(Object o) {
+        return delegate.equals(o);
+    }
+    @Override
+    public int hashCode() {
+        return delegate.hashCode();
+    }
+
+    @Override
+    public Spliterator<E> spliterator() {
+        return delegate.spliterator();
+    }
+
     @Override
     public abstract boolean add(E e);
     @Override

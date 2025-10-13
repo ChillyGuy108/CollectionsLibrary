@@ -1,10 +1,10 @@
 import java.util.Collection;
 
-final class ReadOnlyCollection<E> extends DelegateCollection<E> {
+abstract class ReadOnlyCollection<E> extends DelegateCollection<E> {
     public ReadOnlyCollection(Collection<E> delegate){
         super(delegate);
     }
-    private UnsupportedOperationException unsupported(){
+    protected UnsupportedOperationException unsupported(){
         return new UnsupportedOperationException("This collection is read-only");
     }
     @Override
