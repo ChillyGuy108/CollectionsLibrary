@@ -5,5 +5,4 @@ public final class WriteOnlySet<E> extends WriteOnlyCollection<E> implements Set
         super(set);
     }
 
-
 }

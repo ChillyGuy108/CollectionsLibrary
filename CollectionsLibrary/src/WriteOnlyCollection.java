@@ -1,5 +1,6 @@
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.Spliterator;
 
 abstract class WriteOnlyCollection<E> extends DelegateCollection<E> {
     public WriteOnlyCollection(Collection<E> delegate){
@@ -35,6 +36,18 @@ abstract class WriteOnlyCollection<E> extends DelegateCollection<E> {
     @Override
     public boolean removeAll(Collection<?> c){
         return delegate.removeAll(c);
+    }
+    @Override
+    public Spliterator<E> spliterator() {
+        throw unsupported();
+    }
+    @Override
+    public boolean equals(Object o) {
+        throw unsupported();
+    }
+    @Override
+    public int hashCode() {
+        throw unsupported();
     }
     @Override
     public boolean retainAll(Collection<?> c){

@@ -73,17 +73,20 @@ public final class CollectionUtils {
         return Map.copyOf(map);
     }
     public static <E> ReadOnlyList<E> readOnlyList2(List<E> list) {
-        return new ReadOnlyList<>(new ArrayList<>(list));
+        return new ReadOnlyList<>(list);
     }
-    public static <E> WriteOnlyList<E> writeOnlyArrayList(List<E> list) {
-        return new WriteOnlyList<>(new ArrayList<>());
+    public static <E> WriteOnlyList<E> writeOnlyList(List<E> list) {
+        return new WriteOnlyList<>(list);
     }
-    public static <E> WriteOnlyList<E> writeOnlyLinkedList(List<E> list) {
-        return new WriteOnlyList<>(new LinkedList<>());
+    public static <E> ReadOnlySet<E> readOnlySet2(Set<E> set) {
+        return new ReadOnlySet<>(set);
     }
-    public static <E> ReadOnlySet<E> raedOnlySet2(Set<E> set) {
-        return new ReadOnlySet<>(new HashSet<>());
+    public static <E> WriteOnlySet<E> writeOnlySet2(Set<E> set) {
+        return new WriteOnlySet<>(set);
     }
+
+
+
 
 
 }
