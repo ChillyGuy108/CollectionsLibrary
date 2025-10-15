@@ -1,6 +1,8 @@
 import javax.print.DocFlavor;
 import java.util.Collections;
 import java.util.*;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 public final class CollectionUtils {
     private CollectionUtils(){
@@ -84,11 +86,129 @@ public final class CollectionUtils {
     public static <E> WriteOnlySet<E> writeOnlySet2(Set<E> set) {
         return new WriteOnlySet<>(set);
     }
+    public static<K, V> ReadOnlyMap<K,V> readOnlyMap2(Map<K, V> map){
+        return new ReadOnlyMap<>(map);
+    }
+    public static<K, V> WriteOnlyMap<K,V> writeOnlyMap2(Map<K, V> map){
+        return new WriteOnlyMap<>(map);
+    }
+    public static <E> ReadOnlyQueue<E> readOnlyQueue(Queue<E> queue) {
+        return new ReadOnlyQueue<>(queue);
+    }
+    public static <E> WriteOnlyQueue<E> writeOnlyQueue(Queue<E> queue) {
+        return new WriteOnlyQueue<>(queue);
+    }
+
+        public static <T extends Comparable<? super T>> List<T> sortList(List<T> list) {
+            List<T> sorted = new ArrayList<>(list);
+            Collections.sort(sorted);
+            return sorted;
+        }
+
+    public static <E> Set<E> sortSet(
+            Set<E> set,
+            Comparator<? super E> comparator
+    ) {
+        return set.stream()
+                .sorted(comparator)
+                .collect(Collectors.toCollection(LinkedHashSet::new));
+    }
+
+    public static <E extends Comparable<? super E>> Set<E> sortSet(Set<E> set) {
+        return set.stream()
+                .sorted()
+                .collect(Collectors.toCollection(LinkedHashSet::new));
+    }
 
 
 
 
+    public static <K, V> Map<K, V> sortByValue(
+            Map<K, V> map,
+            Comparator<? super V> valueComparator
+    ) {
+        return map.entrySet()
+                .stream()
+                .sorted(Map.Entry.comparingByValue(valueComparator))
+                .collect(Collectors.toMap(
+                        Map.Entry::getKey,
+                        Map.Entry::getValue,
+                        (e1, e2) -> e1,
+                        LinkedHashMap::new // preserves order
+                ));
+    }
 
+    public static <K extends Comparable<? super K>, V> Map<K, V> sortByKey(Map<K, V> map) {
+        return map.entrySet()
+                .stream()
+                .sorted(Map.Entry.comparingByKey())
+                .collect(Collectors.toMap(
+                        Map.Entry::getKey,
+                        Map.Entry::getValue,
+                        (e1, e2) -> e1,
+                        LinkedHashMap::new
+                ));
+    }
+
+    public static <T> T findFirst(Collection<T> collection, Predicate<T> predicate) {
+        return collection.stream()
+                .filter(predicate)
+                .findFirst()
+                .orElse(null);
+    }
+
+    public static <T> List<T> findAll(Collection<T> collection, Predicate<T> predicate) {
+        return collection.stream()
+                .filter(predicate)
+                .collect(Collectors.toList());
+    }
+
+
+    public static <K, V> K findFirstKey(Map<K, V> map, Predicate<K> predicate) {
+        return map.keySet().stream()
+                .filter(predicate)
+                .findFirst()
+                .orElse(null);
+    }
+
+
+    public static <K, V> V findFirstValue(Map<K, V> map, Predicate<V> predicate) {
+        return map.values().stream()
+                .filter(predicate)
+                .findFirst()
+                .orElse(null);
+    }
+
+
+    public static <K, V> Map.Entry<K, V> findFirstEntry(Map<K, V> map,
+                                                        Predicate<Map.Entry<K, V>> predicate) {
+        return map.entrySet().stream()
+                .filter(predicate)
+                .findFirst()
+                .orElse(null);
+    }
+
+
+    public static <K, V> List<K> findAllKeys(Map<K, V> map, Predicate<K> predicate) {
+        return map.keySet().stream()
+                .filter(predicate)
+                .collect(Collectors.toList());
+    }
+
+
+    public static <K, V> List<V> findAllValues(Map<K, V> map, Predicate<V> predicate) {
+        return map.values().stream()
+                .filter(predicate)
+                .collect(Collectors.toList());
+    }
+
+
+    public static <K, V> List<Map.Entry<K, V>> findAllEntries(Map<K, V> map,
+                                                              Predicate<Map.Entry<K, V>> predicate) {
+        return map.entrySet().stream()
+                .filter(predicate)
+                .collect(Collectors.toList());
+    }
 }
 
 
